@@ -1,6 +1,10 @@
 "use client";
 
-import { fetchUserFromFirestore, fetchUserRegisteredHackathons } from "db/crud";
+import {
+  fetchUserFromFirestore,
+  fetchUserRegisteredHackathons,
+  fetchUserCreatedHackathons,
+} from "db/crud";
 import { auth } from "db/firebase";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -9,6 +13,7 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [hackathons, setHackathons] = useState([]);
+  const [createdHackathons, setCreatedHackathons] = useState([]); // New state for created hackathons
   const router = useRouter();
 
   useEffect(() => {
@@ -28,9 +33,13 @@ const Profile = () => {
             setUserData(null);
           }
         }
-        const data = await fetchUserRegisteredHackathons();
-        setHackathons(data);
-        console.log(data);
+
+        const registeredData = await fetchUserRegisteredHackathons();
+        setHackathons(registeredData);
+
+        const createdData = await fetchUserCreatedHackathons(storedUID);
+        setCreatedHackathons(createdData);
+        console.log(createdData);
       } catch (error) {
         console.error("Error loading user data:", error);
         setUserData(null);
@@ -67,17 +76,17 @@ const Profile = () => {
                 <span>Hackathons Participated: </span>
                 <span>{hackathons.length}</span>
               </div>
-              {/* <div className="flex justify-between">
+              <div className="flex justify-between">
                 <span>Hackathons Created: </span>
-                <span>{hackathons.length}</span>
-              </div> */}
+                <span>{createdHackathons.length}</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="border border-neonGreen rounded-lg p-6 col-span-1 md:col-span-2">
           <h3 className="text-2xl font-bold mb-6">Participated Hackathons</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-3">
             {hackathons.length > 0 ? (
               hackathons.map((hackathon) => (
                 <div
@@ -99,6 +108,32 @@ const Profile = () => {
             ) : (
               <div className="text-center text-sm text-gray-500">
                 You haven't registered for any hackathons yet.
+              </div>
+            )}
+          </div>
+          <h3 className="text-2xl font-bold mb-6">Created Hackathons</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-3">
+            {createdHackathons.length > 0 ? (
+              createdHackathons.map((hackathon) => (
+                <div
+                  key={hackathon.id}
+                  className="border border-neonGreen rounded-lg p-4"
+                >
+                  <h4 className="font-bold mb-2">{hackathon.title}</h4>
+                  <p className="text-sm mb-4 text-cyan-400">
+                    {hackathon.description}
+                  </p>
+                  <button
+                    className="text-sm underline"
+                    onClick={() => navigateToHackathonDetails(hackathon.id)}
+                  >
+                    Learn More
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div className="text-center text-sm text-gray-500">
+                You haven't Created any Hacakathons Yet.
               </div>
             )}
           </div>

@@ -1,46 +1,25 @@
+import { GithubIcon } from "lucide-react";
 import React from "react";
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-6">
-      <div className="container mx-auto flex justify-center items-center">
+      <div className="container mx-auto flex justify-around items-center">
         <p className="text-center text-sm">
-          Made with <span className="text-red-500"></span> by Aniket Khambal
+          Made by Aniket Khambal
         </p>
-        {/* <div className="flex space-x-4">
+         <div className="flex space-x-4">
+          
           <a
-            href="https://twitter.com"
+            href="https://github.com/aniketocto"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#00ff9d] hover:text-cyan-400"
           >
-            <i className="fab fa-twitter"></i>
+            <GithubIcon />
           </a>
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#00ff9d] hover:text-cyan-400"
-          >
-            <i className="fab fa-github"></i>
-          </a>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#00ff9d] hover:text-cyan-400"
-          >
-            <i className="fab fa-linkedin"></i>
-          </a>
-          <a
-            href="https://facebook.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#00ff9d] hover:text-cyan-400"
-          >
-            <i className="fab fa-facebook"></i>
-          </a>
-        </div> */}
+          
+        </div> 
       </div>
     </footer>
   );

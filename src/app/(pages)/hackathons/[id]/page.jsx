@@ -47,7 +47,6 @@ const page = () => {
   const handleRegister = (hackathonId) => {
     if (hackathonId) {
       registerHackathon(hackathonId);
-      alert("Hackathon registered successfully!");
     } else {
       alert("Hackathon not registered");
     }

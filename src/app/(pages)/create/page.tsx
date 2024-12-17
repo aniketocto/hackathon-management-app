@@ -141,6 +141,7 @@ const Create = () => {
               name="startDate"
               value={formData.startDate}
               onChange={handleChange}
+              min={new Date().toISOString().split("T")[0]}
               required
               className="bg-transparent border border-neonGreen py-2 px-4 placeholder:text-neonGreen outline-none"
             />

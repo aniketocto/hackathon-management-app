@@ -138,6 +138,8 @@ export async function registerHackathon(hackathonId) {
         await updateDoc(docref, {
             participants: arrayUnion(userId)
         })
+
+        alert("Hackathon registered successfully!");
     } catch (error) {
         console.log("Error registering for hackathons", error);
         alert("Something went wrong. Please try again")
@@ -166,6 +168,24 @@ export async function fetchUserRegisteredHackathons() {
         return registeredHackathons;
     } catch (error) {
         console.error("Error fetching registered users", error);
+        return [];
+    }
+}
+
+export async function fetchUserCreatedHackathons(userId) {
+    try {
+        const docref = collection(firestoreDB, "hackathons");
+        const q = query(docref, where('createdBy', "==", userId));
+
+        const querySnapShot = await getDocs(q)
+
+        const createdHackathons = querySnapShot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        return createdHackathons;
+    } catch (error) {
+        console.error("Error fetching created Haclathons", error);
         return [];
     }
 }
