@@ -55,7 +55,7 @@ const Profile = () => {
     router.push(`/hackathons/${id}`);
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="min-h-[79vh]" >Loading...</div>;
 
   return (
     <div className="container min-h-[79vh] mx-auto px-6 py-12">

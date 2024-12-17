@@ -35,17 +35,13 @@ const Signup = () => {
     try {
       setLoading(true);
       const res = await createUserWithEmailAndPassword(email, pwd);
-
       const user = auth.currentUser;
-
       const userData = {
         uid: user.uid,
         name: name,
         email: email,
       };
-
       await addUserToFirestore(userData);
-
       setEmail("");
       setPwd("");
       setError("");

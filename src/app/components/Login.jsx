@@ -17,7 +17,9 @@ import Error from "../components/Error";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../db/firebase";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { addUserToFirestore, handleGoogleAuth } from "db/crud";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { serverTimestamp } from "firebase/firestore";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -45,6 +47,33 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       setError("An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    try {
+      setLoading(true);
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      const userData = {
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      };
+
+      await addUserToFirestore(userData);
+      setLoading(false);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+      setError("An error occurred while signing in google");
     } finally {
       setLoading(false);
     }
@@ -85,9 +114,9 @@ const Login = () => {
         <Button onClick={handleLogin}>
           {loading ? <BeatLoader size={10} color="#00ff9d" /> : "Login"}
         </Button>
-        <Link href='?admin=true'>
-          <h1>ADMIN</h1>
-        </Link>
+        <Button onClick={handleGoogleAuth} disabled={loading}>
+          {loading ? "Loading..." : "Google"}
+        </Button>
       </CardFooter>
     </Card>
   );
