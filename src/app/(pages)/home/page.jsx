@@ -12,7 +12,7 @@ const LandingPage = () => {
         <p className="text-xl mt-5 mb-8">
           Join the elite. Code the impossible. Break the boundaries.
         </p>
-        <Link href="/events">
+        <Link href="/">
           <Button className="bg-transparent h-16 border border-neonGreen text-white text-2xl hover:shadow-hover-neon hover:text-neonGreen shadow-neon">
             Register Now
           </Button>
