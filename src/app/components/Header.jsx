@@ -67,9 +67,9 @@ const Header = () => {
           <Link href="/create">
             Create
           </Link>
-          <Link href="/events">
+          {/* <Link href="/events">
             Events
-          </Link>
+          </Link> */}
           {!user ? (
             <Link href="/login">
               <Button>Login</Button>
